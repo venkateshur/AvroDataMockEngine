@@ -57,7 +57,7 @@ public class AvroDataMockEngine {
             });
 
             Dataset<Row> fileDetails = inAvro.select("private_jon_key", "location", "private_join_key_type").distinct();
-            fileDetails.write().option("header", "true").mode("overwrite").csv(outputDir + "/processed_files/" + currentTimestamp);
+            fileDetails.coalesce(1).write().option("header", "true").mode("overwrite").csv(outputDir + "/processed_files/" + currentTimestamp);
         } catch (Exception exception){
             exception.printStackTrace();
             System.out.println("Mock Avro App failed with error : " + exception.getMessage());
