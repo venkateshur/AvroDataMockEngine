@@ -39,9 +39,8 @@ public class AvroDataMockEngine {
                     .withColumn("private_join_key_type", functions.lit("application_id"))
                     .persist(StorageLevel.MEMORY_AND_DISK());
 
-            int avroInRecordsCount = Integer.parseInt(String.valueOf(inAvro.count()));
-
             if (Objects.equals(recordsSelectionMode, "PERCENTAGE")) {
+                int avroInRecordsCount = Integer.parseInt(String.valueOf(inAvro.count()));
                 requiredNumberOfRecordsArray =
                         Arrays.stream(args[1].split(SPLITTER))
                                 .map(per -> Math.abs(avroInRecordsCount * (Integer.parseInt(per) / 100))).collect(Collectors.toList());
