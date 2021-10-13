@@ -22,11 +22,11 @@ public class AvroDataMockEngine {
         String recordsSelectionMode;
 
         String inputPath = args[0];
+        String outputDir = args[1];
         List<Integer> requiredNumberOfRecordsArray;
-        String outputDir = args[2];
 
         if (args.length == 3) {
-            recordsSelectionMode = args[3];
+            recordsSelectionMode = args[2];
         } else recordsSelectionMode = "RECORDS";
 
         String currentTimestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
@@ -42,7 +42,7 @@ public class AvroDataMockEngine {
             if (Objects.equals(recordsSelectionMode, "PERCENTAGE")) {
                 int avroInRecordsCount = Integer.parseInt(String.valueOf(inAvro.count()));
                 requiredNumberOfRecordsArray =
-                        Arrays.stream(args[1].split(SPLITTER))
+                        Arrays.stream(args[2].split(SPLITTER))
                                 .map(per -> Math.abs(avroInRecordsCount * (Integer.parseInt(per) / 100))).collect(Collectors.toList());
             } else {
                 requiredNumberOfRecordsArray = Arrays.stream(args[1].split(SPLITTER))
